@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestra Boda | Invitación Especial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #8eb6dc;
+      --soft-blue: #e8f1f9;
+      --dark-blue: #1e3a5f;
+      --accent-gold: #d4af37;
+      --white-glass: rgba(255, 255, 255, 0.82);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      min-height: 100vh;
+      background: #0d1b2a url('https://i.ibb.co/LdtyxcCp/IMG-20261030-WA0085-2.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 10px;
+      position: relative;
+    }
+
+    /* Capa azul de superposición */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(30, 58, 95, 0.75), rgba(142, 182, 220, 0.55));
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 650px;
+      background: var(--white-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 40px 25px;
+      text-align: center;
+    }
+
+    /* Reproductor de Música */
+    .music-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.1);
+    }
+
+    h3.subtitle {
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dark-blue);
+      margin-bottom: 10px;
+    }
+
+    h1.title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: var(--dark-blue);
+      margin-bottom: 5px;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .divider {
+      width: 80px;
+      height: 2px;
+      background: var(--accent-gold);
+      margin: 15px auto;
+    }
+
+    p.date-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: #444;
+      margin-bottom: 25px;
+    }
+
+    /* Cuenta Regresiva */
+    .countdown-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--dark-blue);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 35px;
+    }
+
+    .timer-box {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 12px;
+      padding: 12px;
+      min-width: 70px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid rgba(142, 182, 220, 0.3);
+    }
+
+    .timer-number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--dark-blue);
+    }
+
+    .timer-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    /* Formulario */
+    .form-container {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 25px 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .form-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--dark-blue);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark-blue);
+      margin-bottom: 6px;
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      background: #fff;
+      transition: border 0.3s;
+    }
+
+    .form-group input:focus, 
+    .form-group select:focus, 
+    .form-group textarea:focus {
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 5px rgba(142, 182, 220, 0.5);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    /* Adaptabilidad */
+    @media (max-width: 480px) {
+      .title { font-size: 2.8rem; }
+      .container { padding: 30px 15px; }
+      .timer { gap: 6px; }
+      .timer-box { min-width: 58px; padding: 8px 4px; }
+      .timer-number { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Botón de Música -->
+    <button class="music-btn" id="musicToggle" title="Activar/Desactivar Música">
+      🎵
+    </button>
+
+    <h3 class="subtitle">¡Nos Casamos!</h3>
+    <h1 class="title">Nuestra Boda</h1>
+    <div class="divider"></div>
+    <p class="date-text">Sábado, 05 de Diciembre de 2026<br>19:00 Horas</p>
+
+    <!-- Cuenta Regresiva -->
+    <div class="countdown-title">Faltan tan solo:</div>
+    <div class="timer">
+      <div class="timer-box">
+        <div class="timer-number" id="days">00</div>
+        <div class="timer-label">Días</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-number" id="hours">00</div>
+        <div class="timer-label">Horas</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-number" id="minutes">00</div>
+        <div class="timer-label">Minutos</div>
+      </div>
+      <div class="timer-box">
+        <div class="timer-number" id="seconds">00</div>
+        <div class="timer-label">Segundos</div>
+      </div>
+    </div>
+
+    <!-- Formulario RSVP -->
+    <div class="form-container">
+      <h2>Confirmación de Asistencia</h2>
+      <form id="rsvpForm">
+        <div class="form-group">
+          <label for="fullName">Nombre / Familia:</label>
+          <input type="text" id="fullName" placeholder="Ej: Familia Pérez o Carlos Mendoza" required>
+        </div>
+
+        <div class="form-group">
+          <label>¿Nos acompañarás en este día?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="attendance" value="Sí, con mucho gusto asistiré" checked onchange="toggleGuests(true)"> Sí, asistiré
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="attendance" value="Lamentablemente no podré asistir" onchange="toggleGuests(false)"> No podré ir
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="guestsGroup">
+          <label for="guestCount">Número de personas (Máx. 5):</label>
+          <select id="guestCount">
+            <option value="1">1 Persona</option>
+            <option value="2">2 Personas</option>
+            <option value="3">3 Personas</option>
+            <option value="4">4 Personas</option>
+            <option value="5">5 Personas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Mensaje especial (opcional):</label>
+          <textarea id="message" rows="2" placeholder="Un bonito deseo para los novios..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Confirmar por WhatsApp</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.156 4.22 4.299-1.128z"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Cuenta Regresiva
+    const targetDate = new Date("December 5, 2026 19:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.querySelector('.timer').innerHTML = "<h3 style='color:var(--dark-blue)'>¡Llegó el gran día!</h3>";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+      document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+      document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Ocultar/Mostrar número de invitados según respuesta
+    function toggleGuests(show) {
+      document.getElementById('guestsGroup').style.display = show ? 'block' : 'none';
+    }
+
+    // Envío por WhatsApp
+    document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const phone = "584163225571";
+      const fullName = document.getElementById('fullName').value;
+      const attendance = document.querySelector('input[name="attendance"]:checked').value;
+      const guestCount = document.getElementById('guestCount').value;
+      const message = document.getElementById('message').value;
+
+      let whatsappText = `¡Hola! 💍✨\n\n`;
+      whatsappText += `Confirmación de asistencia para la boda:\n`;
+      whatsappText += `👤 *Nombre/Familia:* ${fullName}\n`;
+      whatsappText += `💌 *Respuesta:* ${attendance}\n`;
+      
+      if (attendance.includes("Sí")) {
+        whatsappText += `👥 *Número de asistentes:* ${guestCount} persona(s)\n`;
+      }
+      
+      if (message.trim() !== "") {
+        whatsappText += `💬 *Mensaje para los novios:* "${message}"\n`;
+      }
+
+      whatsappText += `\n¡Gracias por la invitación! ❤️`;
+
+      const encodedText = encodeURIComponent(whatsappText);
+      const url = `https://api.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+
+      window.open(url, '_blank');
+    });
+
+    // Música Sintetizada
+    let audioCtx = null;
+    let isPlaying = false;
+    let intervalId = null;
+
+    document.getElementById('musicToggle').addEventListener('click', function() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (isPlaying) {
+        clearInterval(intervalId);
+        isPlaying = false;
+        this.innerText = '🎵';
+      } else {
+        isPlaying = true;
+        this.innerText = '🔊';
+        
+        const notes = [261.63, 329.63, 392.00, 523.25]; // Melodía suave estilo arpa
+        let step = 0;
+
+        intervalId = setInterval(() => {
+          if (!isPlaying) return;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 1.2);
+          step++;
+        }, 600);
+      }
+    });
+  </script>
+</body>
+</html>
+
